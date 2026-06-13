@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lunch ?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --black: #111111;
+      --gray: #888888;
+      --light: #f8f5f5;
+      --border: #e8dede;
+      --red: #c0392b;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      max-width: 400px;
+      width: 100%;
+      padding: 3.5rem 2.8rem;
+      animation: up 0.8s ease both;
+    }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .stripe {
+      display: flex;
+      margin-bottom: 3rem;
+    }
+    .stripe i {
+      height: 1px;
+      display: block;
+    }
+    .stripe i:first-child { width: 32px; background: var(--red); }
+    .stripe i:last-child  { flex: 1; background: var(--border); }
+
+    .label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.6rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--red);
+    }
+
+    .details {
+      border-left: 2px solid var(--red);
+      padding-left: 1.1rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .details p {
+      font-size: 0.82rem;
+      color: var(--gray);
+      font-weight: 300;
+      line-height: 2;
+      letter-spacing: 0.01em;
+    }
+
+    .details strong {
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    .note {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 2.8rem;
+      font-style: italic;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .btn-yes {
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-yes:hover { background: #a93226; }
+
+    .btn-no {
+      background: transparent;
+      border: none;
+      color: #bbb;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.73rem;
+      font-weight: 300;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: #ddd;
+      padding: 0.4rem;
+      text-align: center;
+      transition: color 0.2s;
+    }
+    .btn-no:hover { color: var(--gray); }
+
+    .done {
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+      animation: up 0.6s ease both;
+    }
+    .done-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .done h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+      color: var(--black);
+    }
+    .done p {
+      font-size: 0.82rem;
+      color: var(--gray);
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .form-body { transition: opacity 0.3s; }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <div class="form-body" id="formBody">
+    <div class="stripe"><i></i><i></i></div>
+
+    <p class="label">A personal invitation</p>
+
+    <h1>Would you accept <em>an invitation for a date ?</em></h1>
+
+    <div class="details">
+      <p><strong>Monday</strong></p>
+      <p>Pick-up at <strong>1:00 pm</strong></p>
+    </div>
+
+    <p class="note">No need to plan a thing — just show up.</p>
+
+    <hr class="divider"/>
+
+    <form id="inviteForm" action="https://formspree.io/f/mkokqaql" method="POST">
+      <input type="hidden" name="answer" id="answer"/>
+      <div class="actions">
+        <button type="button" class="btn-yes" onclick="send('Yes')">I'd love that</button>
+        <button type="button" class="btn-no" onclick="send('No')">Not this time, sorry</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="done" id="doneSection">
+    <div class="done-mark" id="doneMark">♡</div>
+    <h2 id="doneTitle">See you Monday.</h2>
+    <p id="doneText">I'll be there at 1pm sharp.<br>Can't wait.</p>
+  </div>
+
+</div>
+
+<script>
+  function send(rep) {
+    document.getElementById('answer').value = rep;
+    var form = document.getElementById('inviteForm');
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).finally(function () { showDone(rep); });
+  }
+
+  function showDone(rep) {
+    var body = document.getElementById('formBody');
+    body.style.opacity = '0';
+    setTimeout(function () {
+      body.style.display = 'none';
+      var mark  = document.getElementById('doneMark');
+      var title = document.getElementById('doneTitle');
+      var text  = document.getElementById('doneText');
+      if (rep === 'Yes') {
+        mark.textContent  = '♡';
+        title.textContent = 'See you Monday.';
+        text.innerHTML    = "I'll be there at 1pm sharp.<br>Can't wait (to see you with jelaba 😄)";
+      } else {
+        mark.textContent  = '—';
+        mark.style.color  = '#bbb';
+        title.textContent = 'No worries.';
+        text.innerHTML    = 'Thanks for letting me know.<br>Maybe another time.';
+      }
+      document.getElementById('doneSection').style.display = 'block';
+    }, 320);
+  }
+</script>
+</body>
+</html>
